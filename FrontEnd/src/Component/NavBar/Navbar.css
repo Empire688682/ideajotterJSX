@@ -1,0 +1,76 @@
+.navbar-container{
+    padding: 20px 5%;
+    background-color: var(--mint-green);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.navbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.menu{
+    display: none;
+}
+
+.navbar .logo-container{
+    width: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 20px;
+}
+
+.logo-container li{
+    list-style: none;
+    font-weight: bolder;
+    text-transform: capitalize;
+}
+
+.logo img{
+    width: 80px;
+    height: 80px;
+}
+
+.navbar nav ul{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar nav ul div{
+    display: flex;
+    align-items:center ;
+    justify-content:center ;
+}
+
+.navbar nav ul li{
+    margin-right: 20px;
+    list-style: none;
+}
+
+.navbar nav ul li a, .navbar .log-in-register li a{
+    text-decoration: none;
+    color: black;
+    transition: .2s ease-in-out;
+    font-weight: 400;
+}
+
+.navbar nav ul li a:hover, .navbar .log-in-register li a:hover{
+    color: #ffffff;
+}
+
+.navbar .log-in-register{
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 100px;
+}
+
+.log-in-register li{
+    list-style: none;
+    margin-right: 10px;
+}
