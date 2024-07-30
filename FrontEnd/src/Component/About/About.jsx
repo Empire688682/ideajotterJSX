@@ -1,5 +1,6 @@
 import React from 'react';
-import notejot_Logo from '../Assert/notejot_logo.png'
+import './About.css';
+import notejot_Logo from '../Assert/notejot_logo.png';
 
 const About = () => {
   return (

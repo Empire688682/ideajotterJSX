@@ -1,15 +1,16 @@
 .navbar-container{
-    padding: 20px 5%;
-    background-color: var(--mint-green);
     position: sticky;
     top: 0;
     z-index: 999;
+    padding: 0px 5%;
+    background-color: var(--mint-green);
 }
 
 .navbar{
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 20px 0;
 }
 
 .menu{
@@ -53,15 +54,18 @@
     list-style: none;
 }
 
-.navbar nav ul li a, .navbar .log-in-register li a{
+.navbar nav ul li .menu_link, .navbar .log-in-register li .menu_link{
     text-decoration: none;
     color: black;
     transition: .2s ease-in-out;
     font-weight: 400;
+    padding: 10px;
+    border-radius: 5px;
 }
 
-.navbar nav ul li a:hover, .navbar .log-in-register li a:hover{
+.navbar nav ul li .menu_link.active, .navbar .log-in-register li .menu_link:hover{
     color: #ffffff;
+    background-color: black;
 }
 
 .navbar .log-in-register{
@@ -73,4 +77,55 @@
 .log-in-register li{
     list-style: none;
     margin-right: 10px;
+}
+
+
+/*-------------media query--------------*/
+@media (max-width:680px){
+    .navbar nav ul{
+        position: absolute;
+        width: 100%;
+        right: 0;
+        top: 100px;
+        display: block;
+        text-align: right;
+        max-height: 0;
+        background-color: var(--mint-green);
+        overflow: hidden;
+        transition:max-height .6s ease-in-out ;
+    }
+
+    .navbar nav ul.show-mobile-menu{
+        max-height: 300px;
+    }
+
+    .navbar nav ul div{
+        display: block;
+        align-items:center ;
+        justify-content:center ;
+    }
+    
+    .navbar nav ul li{
+        margin-bottom: 20px;
+        padding: 10px;
+    }
+
+    .navbar .log-in-register{
+        display: block;
+    }
+
+    .col-2{
+        flex-basis: 100%;
+    }
+
+    .menu{
+        display: block;
+        margin-right: 10px;
+    }
+    .menus_icon{
+        width: 40px;
+        height: 40px;
+        margin-right: 20%;
+        cursor: pointer;
+    }
 }
