@@ -78,3 +78,14 @@
     background-color: rgb(17, 209, 17);
     text-shadow: none;
 }
+
+/*-------------media query--------------*/
+@media (max-width:680px){
+    .ideasJotter .col-2{
+        flex-basis: 100%;
+        margin-bottom: 20px;
+    }
+    .col-2 img{
+        width: 100%;
+    }
+}

@@ -2,6 +2,7 @@ import React from 'react';
 import './HomePage.css';
 import noteJoter_Gif from '../Assert/notejot_gif.gif'
 import { NavLink } from 'react-router-dom';
+import { useGlobalContex } from '../Context';
 
 
 const HomePage = () => {

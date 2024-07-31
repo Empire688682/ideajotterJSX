@@ -92,7 +92,7 @@
         max-height: 0;
         background-color: var(--mint-green);
         overflow: hidden;
-        transition:max-height .6s ease-in-out ;
+        transition:max-height .3s ease-in-out ;
     }
 
     .navbar nav ul.show-mobile-menu{

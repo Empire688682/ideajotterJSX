@@ -9,7 +9,6 @@ import logo_Icon from '../Assert/notejot_logo.png';
 const NavBar = () => {
     const [showMenu, setShowMenu] = useState(false);
     console.log(showMenu)
-    
     return (
         <div className="header">
             <div className="navbar-container">
@@ -22,9 +21,10 @@ const NavBar = () => {
                     <nav>
                         <ul className={showMenu? "show-mobile-menu":""}>
                             <div>
-                                <li><NavLink className="menu_link" to="/">Home</NavLink></li>
-                                <li><NavLink className="menu_link" to="/about">About</NavLink></li>
-                                <li><NavLink className="menu_link" to="/contact">Contact</NavLink></li>
+                                <li onClick={()=>setShowMenu(false)}><NavLink className="menu_link" to="/">Home</NavLink></li>
+                                <li onClick={()=>setShowMenu(false)}><NavLink className="menu_link" to="/about">About</NavLink></li>
+                                <li onClick={()=>setShowMenu(false)}><NavLink className="menu_link" to="/contact">Contact</NavLink></li>
+                                <li onClick={()=>setShowMenu(false)}><NavLink className="menu_link" to="/signup">Signup</NavLink></li>
                             </div>
                         </ul>
                     </nav>

@@ -23,3 +23,19 @@
   flex-basis: 45%;
   min-width: 300px;
 }
+
+html::-webkit-scrollbar{
+  background-color: rgb(31, 26, 26);
+}
+
+html::-webkit-scrollbar-thumb{
+  background-color: var(--mint-green);
+}
+
+html::-webkit-scrollbar-track-piece{
+  background-color: var(--white);
+}
+
+html{
+  scroll-behavior: smooth;
+}
