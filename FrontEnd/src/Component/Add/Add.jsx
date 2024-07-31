@@ -1,12 +1,15 @@
 import React from 'react';
 import './Add.css';
+import { useGlobalContex } from '../Context';
+import { FaHeart } from "react-icons/fa";
 
 const Add = () => {
+    const {user} = useGlobalContex();
     return (
         <div>
             <div className="add-header">
                 <div className="container">
-                    <h1> Add your great idea @ User <i className='fa fa-heart'></i></h1>
+                    <h2> Add your great idea @ <h1>{user} <FaHeart style={{color:"red", minWidth:"40px"}}/></h1></h2>
                 </div>
             </div>
             <div className="add-section">

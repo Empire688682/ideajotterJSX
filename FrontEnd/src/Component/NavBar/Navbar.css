@@ -17,6 +17,17 @@
     display: none;
 }
 
+.button{
+    background-color: black;
+    font-weight: bolder;
+    border: none;
+    cursor: pointer;
+}
+.button p{
+    font-weight: bolder;
+    color: white;
+}
+
 .navbar .logo-container{
     width: 250px;
     display: flex;
