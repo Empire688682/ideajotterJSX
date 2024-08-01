@@ -71,6 +71,7 @@ const loginUser = async (req,res) =>{
 
         const user = await userModel.findOne({email});
 
+
         // checking is user
         if(!user){
             return res.json({success:false, message:"No user found"});
@@ -86,7 +87,7 @@ const loginUser = async (req,res) =>{
          if(!isPasswordMatch){
             return res.json({success:false, message:"Password did not match"});
         }
-        //generating token
+        //generating token for login
         const token = tokenGenerator(user._id);
         const User = await user.username;
         return res.json({success:true, User, token, message:"Login successful"});

@@ -12,8 +12,12 @@ const addNote = async (req,res) =>{
             title:title,
             content:content
         });
+
+        const userId = fetchUser()
+        console.log(userId)
        await newNote.save();
-        res.json({success:true, message:"Note Saved"})
+
+        res.json({success:true, newNote, message:"Note Saved"})
     } catch (error) {
         console.log(error);
         res.json({success:false, message:"Error"})
