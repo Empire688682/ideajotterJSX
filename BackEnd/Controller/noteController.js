@@ -1,4 +1,6 @@
 import noteModel from "../Model/noteModel.js";
+import userModel from "../Model/userModel.js";
+import { tokenVerify } from "../Middleware/middleware.js";
 
 
 const addNote = async (req,res) =>{
@@ -13,8 +15,6 @@ const addNote = async (req,res) =>{
             content:content
         });
 
-        const userId = fetchUser()
-        console.log(userId)
        await newNote.save();
 
         res.json({success:true, newNote, message:"Note Saved"})

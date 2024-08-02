@@ -5,8 +5,8 @@ import bcrypt from 'bcryptjs';
 
 
 
-const tokenGenerator = (id) =>{
-    return jwt.sign({id},process.env.TOKEN_KEY)
+const tokenGenerator = (userId) =>{
+    return jwt.sign({userId},process.env.TOKEN_KEY)
 }
 
 const registerUser = async (req,res) =>{
