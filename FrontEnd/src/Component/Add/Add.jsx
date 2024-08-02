@@ -11,12 +11,7 @@ const Add = () => {
         title: "",
         content: ""
     });
-
-    const testing = (e) =>{
-        note.map((note)=> note.i === e);
-        console.log(e)
-    }
-    testing()
+    const [message, setMessage] = useState(null)
 
     const handleFormSubmision = (e) => {
         e.preventDefault();
@@ -44,7 +39,10 @@ const Add = () => {
 
                 // Update the note state with the new notes
                 setNote(Object.values(response.data.noteData)); // Convert noteData map to array
-                console.log(response.data.noteData); // Log the noteData for debugging
+                // Log the noteData for debugging
+            }
+            else {
+                setMessage(response.data.message)
             }
         } catch (error) {
             console.log(error);
@@ -63,6 +61,7 @@ const Add = () => {
                     <div className="add-container">
                         <form onSubmit={handleFormSubmision}>
                             <h2 className="heading">That your awesome note</h2>
+                            <p>{message}</p>
                             <div>
                                 <label htmlFor="title">Title</label>
                                 <input onChange={handleOnChange} type="text" value={data.title} name='title' required />
@@ -73,16 +72,20 @@ const Add = () => {
                             </div>
                             <button type="submit" className="submit-btn">Submit</button>
                         </form>
-                        <div>
-                <h2>Notes</h2>
-                {note.map((n) => (
-                    <div key={n.id}>
-                        <h3>{n.title}</h3>
-                        <p>{n.content}</p>
-                        <small>{n.date}</small> {/* Display the date if available */}
                     </div>
-                ))}
-            </div>
+                    <div className="note_section">
+                        <h3>NOTES</h3>
+                        {
+                            note ? note.map((n) => {
+                                return <div key={n.id}>
+                                    <div className="header">
+                                        <p className="title">{n.title}</p>
+                                        <p className="date">{n.date}</p>
+                                    </div>
+                                    <p className="content">{n.content}</p>
+                                </div>
+                            }) : null
+                        }
                     </div>
                 </div>
             </div>

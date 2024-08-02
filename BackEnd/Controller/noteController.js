@@ -52,6 +52,17 @@ const addNote = async (req, res) => {
         console.log(error);
         res.json({ success: false, message: "Error" })
     }
+};
+
+const fetchNote = async (req,res) =>{
+    try {
+        const userId = req.userId
+        const user = await userModel.findById(userId);
+        const userNoteData = user.noteData;
+        res.json({ success: true, userNoteData:userNoteData.noteData, message: "Note fetched" })
+    } catch (error) {
+        
+    }
 }
 
-export { addNote }
+export { addNote,fetchNote }
