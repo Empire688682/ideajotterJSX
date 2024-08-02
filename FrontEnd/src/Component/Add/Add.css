@@ -45,7 +45,7 @@
     font-size: 30px;
 }
 
-.add-header h2{
+.add-header .user{
     display: flex;
     align-items: center;
     gap: 10px;

@@ -12,6 +12,12 @@ const Add = () => {
         content: ""
     });
 
+    const testing = (e) =>{
+        note.map((note)=> note.i === e);
+        console.log(e)
+    }
+    testing()
+
     const handleFormSubmision = (e) => {
         e.preventDefault();
         addNote();
@@ -36,8 +42,9 @@ const Add = () => {
                     content: ""
                 });
 
-                setNote([...note, response.data.newNote]);
-                console.log(note);
+                // Update the note state with the new notes
+                setNote(Object.values(response.data.noteData)); // Convert noteData map to array
+                console.log(response.data.noteData); // Log the noteData for debugging
             }
         } catch (error) {
             console.log(error);
@@ -48,7 +55,7 @@ const Add = () => {
         <div>
             <div className="add-header">
                 <div className="container">
-                    <h1> Add your great idea @ <h2>{user} <FaHeart style={{ color: "red", minWidth: "40px" }} /></h2></h1>
+                    <h1> Add your great idea @ <p className='user'> {user} <FaHeart style={{ color: "red", minWidth: "40px" }} /></p></h1>
                 </div>
             </div>
             <div className="add-section">
@@ -66,6 +73,16 @@ const Add = () => {
                             </div>
                             <button type="submit" className="submit-btn">Submit</button>
                         </form>
+                        <div>
+                <h2>Notes</h2>
+                {note.map((n) => (
+                    <div key={n.id}>
+                        <h3>{n.title}</h3>
+                        <p>{n.content}</p>
+                        <small>{n.date}</small> {/* Display the date if available */}
+                    </div>
+                ))}
+            </div>
                     </div>
                 </div>
             </div>
