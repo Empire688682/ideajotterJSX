@@ -5,8 +5,8 @@ import bcrypt from 'bcryptjs';
 
 
 
-const tokenGenerator = (userId) =>{
-    return jwt.sign({userId},process.env.TOKEN_KEY)
+const tokenGenerator = (id) =>{
+    return jwt.sign({id},process.env.TOKEN_KEY)
 }
 
 const registerUser = async (req,res) =>{
@@ -76,6 +76,11 @@ const loginUser = async (req,res) =>{
         if(!user){
             return res.json({success:false, message:"No user found"});
         }
+
+        //checking is emptyInput
+        if(!username || !email || !password){
+            return res.json({success:false, message:"All filed required"});
+        };
 
         // checking is username
         if(username !== user.username){

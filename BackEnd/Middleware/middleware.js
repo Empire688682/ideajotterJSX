@@ -11,7 +11,7 @@ export const tokenVerify = (req, res, next) =>{
         if(error){
             return  res.json({success:false, message:"Not authrization"})
         };
-        req.userId = decoded.userId;
+        req.userId = decoded.id;
         next()
     });
 }

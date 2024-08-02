@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useContext } from 'react';
 
-const JoteContext = React.createContext();
+const JoterContext = React.createContext();
 export const JoterProvider = ({children}) =>{
 
     const url = "http://localhost:1999";
     const [token, setToken] = useState(localStorage.getItem("token")||null);
     const [user, setUser] = useState(localStorage.getItem("user") ||'');
-
-    console.log(user)
 
     //logout user
     const logOutUser = () => {
@@ -17,7 +15,7 @@ export const JoterProvider = ({children}) =>{
         window.location.replace("/");
     };
 
-    return <JoteContext.Provider value={{
+    return <JoterContext.Provider value={{
         url,
         token, 
         setToken,
@@ -26,13 +24,13 @@ export const JoterProvider = ({children}) =>{
         logOutUser
     }}>
         {children}
-    </JoteContext.Provider>
+    </JoterContext.Provider>
 };
 
 
 
 export const useGlobalContex = () =>{
-    return useContext(JoteContext);
+    return useContext(JoterContext);
 }
 
 export default JoterProvider
