@@ -57,11 +57,15 @@ const addNote = async (req, res) => {
 const fetchNote = async (req,res) =>{
     try {
         const userId = req.userId
+        if(!userId){
+           return res.json({ success: false, message: "Not Authorize" })
+        }
         const user = await userModel.findById(userId);
         const userNoteData = user.noteData;
-        res.json({ success: true, userNoteData:userNoteData.noteData, message: "Note fetched" })
+        res.json({ success: true, userNoteData:user.noteData, message: "Note fetched" })
     } catch (error) {
-        
+        console.log(error);
+        res.json({ success: false, message: "Error" })
     }
 }
 

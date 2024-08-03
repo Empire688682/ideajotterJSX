@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Add.css';
 import { useGlobalContex } from '../Context';
 import { FaHeart } from "react-icons/fa";
@@ -18,6 +18,15 @@ const Add = () => {
         addNote();
     }
 
+    useEffect(()=>{
+        const savedNote = localStorage.getItem("note");
+        if(savedNote){
+            setNote(savedNote);
+        }
+    },[])
+
+    console.log(url)
+
     const handleOnChange = (e) => {
         const { name, value } = e.target;
         setData((prev) => ({ ...prev, [name]: value }));
@@ -25,7 +34,7 @@ const Add = () => {
 
     const addNote = async () => {
         try {
-            const response = await axios.post(url + "/api/note/add", data, {
+            const response = await axios.post(url+"/api/note/add", data, {
                 headers: {
                     Authorization: `${token}`
                 }
@@ -38,7 +47,7 @@ const Add = () => {
                 });
 
                 // Update the note state with the new notes
-                setNote(Object.values(response.data.noteData)); // Convert noteData map to array
+                fetchNote()// Convert noteData map to array
                 // Log the noteData for debugging
             }
             else {
@@ -48,6 +57,20 @@ const Add = () => {
             console.log(error);
         }
     };
+
+    const fetchNote = async () =>{
+        try {
+            const response = await axios.get(url+"/api/note/get", {headers: {
+                Authorization: `${token}`
+            }})
+            if(response.data.success){
+                console.log(response.data.userNoteData);
+                localStorage.setItem("note", Object.values(response.data.userNoteData))
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <div>
