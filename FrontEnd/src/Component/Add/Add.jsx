@@ -18,19 +18,11 @@ const Add = () => {
         addNote();
     }
 
-    useEffect(()=>{
-        const savedNote = localStorage.getItem("note");
-        if(savedNote){
-            setNote(savedNote);
-        }
-    },[])
-
-    console.log(url)
-
     const handleOnChange = (e) => {
         const { name, value } = e.target;
         setData((prev) => ({ ...prev, [name]: value }));
     }
+    
 
     const addNote = async () => {
         try {
@@ -46,9 +38,7 @@ const Add = () => {
                     content: ""
                 });
 
-                // Update the note state with the new notes
-                fetchNote()// Convert noteData map to array
-                // Log the noteData for debugging
+                fetchNote()
             }
             else {
                 setMessage(response.data.message)
@@ -64,8 +54,8 @@ const Add = () => {
                 Authorization: `${token}`
             }})
             if(response.data.success){
-                console.log(response.data.userNoteData);
-                localStorage.setItem("note", Object.values(response.data.userNoteData))
+                localStorage.setItem("note", Object.values(response.data.userNoteData));
+                setNote(Object.values(response.data.userNoteData));
             }
         } catch (error) {
             console.log(error);
