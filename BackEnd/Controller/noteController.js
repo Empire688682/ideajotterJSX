@@ -24,24 +24,33 @@ const addNote = async (req, res) => {
         }
 
         //formating date
-        const formatDate = () => {
-            const now = new Date();
-            const options = { weekday: 'short', year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-            return now.toLocaleString('en-US', options).replace(',', ''); // Removing comma to match the format
-        }
+        const formatDate = (date) => {
+            const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+            const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+            const day = days[date.getDay()];
+            const month = months[date.getMonth()];
+            const dayOfMonth = date.getDate().toString().padStart(2, '0');
+            const year = date.getFullYear();
+
+            return `${day} ${month} ${dayOfMonth}, ${year}`;
+        };
+
+        const date = new Date();
+        const formattedDate = formatDate(date);
 
         user.noteData = user.noteData || {}
 
-       user.noteData.set(newNote._id.toString(), {
-        id:newNote._id.toString(),
-        title:newNote.title,
-        content:newNote.content,
-        date:formatDate()
-       })
+        user.noteData.set(newNote._id.toString(), {
+            id: newNote._id.toString(),
+            title: newNote.title,
+            content: newNote.content,
+            date: formattedDate
+        })
 
         await user.save();
         await newNote.save();
-        
+
         // Fetch updated user data including noteData
         const updatedUser = await userModel.findById(userId);
         const noteData = updatedUser.noteData;
@@ -54,19 +63,53 @@ const addNote = async (req, res) => {
     }
 };
 
-const fetchNote = async (req,res) =>{
+const fetchNote = async (req, res) => {
     try {
         const userId = req.userId
-        if(!userId){
-           return res.json({ success: false, message: "Not Authorize" })
+        if (!userId) {
+            return res.json({ success: false, message: "Not Authorize" })
         }
         const user = await userModel.findById(userId);
         const userNoteData = user.noteData;
-        res.json({ success: true, userNoteData:user.noteData, message: "Note fetched" })
+        res.json({ success: true, userNoteData, message: "Note fetched" })
     } catch (error) {
         console.log(error);
         res.json({ success: false, message: "Error" })
     }
-}
+};
 
-export { addNote,fetchNote }
+
+
+const deleteNote = async (req, res) => {
+    try {
+        const userId = req.userId;
+        const { noteId } = req.body;
+
+        if (!userId) {
+            return res.json({ success: false, message: "Not Authorized" });
+        }
+
+        const user = await userModel.findById(userId);
+        if (!user) {
+            return res.json({ success: false, message: "User not found" });
+        }
+
+        if (!user.noteData || !user.noteData[noteId]) {
+            return res.json({ success: false, message: "Note not found" });
+        }
+
+        // Delete the note
+        delete user.noteData[noteId];
+
+        // Save the updated user
+        await user.save();
+
+        res.json({ success: true, message: "Note deleted successfully", noteData: user.noteData });
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: "Error" });
+    }
+};
+
+
+export { addNote, fetchNote, deleteNote }

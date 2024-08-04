@@ -178,8 +178,18 @@
 .note_section .header{
     display: flex;
     justify-content: space-between;
+    margin: 20px 0;
+}
+.note_section .header .title{
+    text-transform: capitalize;
+    font-weight: bold;
+}
+
+.note_section .content{
+    font-size: 15px;
 }
 
 .note_section button{
     padding: 10px 20px;
+    font-size: 10px;
 }
