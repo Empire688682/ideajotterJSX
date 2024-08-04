@@ -44,10 +44,10 @@ const addNote = async (req, res) => {
         
         // Fetch updated user data including noteData
         const updatedUser = await userModel.findById(userId);
+        const noteData = updatedUser.noteData;
+        console.log(noteData);
 
-        console.log('User after save:', await userModel.findById(userId)); // Debugging line
-
-        res.json({ success: true, noteData:updatedUser.noteData, message: "Note Saved" })
+        res.json({ success: true, noteData, message: "Note Saved" })
     } catch (error) {
         console.log(error);
         res.json({ success: false, message: "Error" })

@@ -38,7 +38,10 @@ const Add = () => {
                     content: ""
                 });
 
-                fetchNote()
+                const fetchedNote = Object.values(response.data.noteData);
+                localStorage.setItem("noteData", JSON.stringify(fetchedNote));
+                setNote(fetchedNote);
+                setMessage("Note added successfully"); // Provide user feedback
             }
             else {
                 setMessage(response.data.message)
@@ -48,19 +51,26 @@ const Add = () => {
         }
     };
 
-    const fetchNote = async () =>{
-        try {
-            const response = await axios.get(url+"/api/note/get", {headers: {
-                Authorization: `${token}`
-            }})
-            if(response.data.success){
-                localStorage.setItem("note", Object.values(response.data.userNoteData));
-                setNote(Object.values(response.data.userNoteData));
+    useEffect(()=>{
+        const fetchNote = async () =>{
+            try {
+                const response = await axios.get(url+"/api/note/get", {headers: {
+                    Authorization: `${token}`
+                }})
+                if(response.data.success){
+                    const fetchedNote = Object.values(response.data.userNoteData)
+                    localStorage.setItem("note", JSON.stringify(fetchedNote));
+                    setNote(fetchedNote);
+                }
+                else{
+                    setMessage(response.data.message)
+                }
+            } catch (error) {
+                console.log(error);
             }
-        } catch (error) {
-            console.log(error);
         }
-    }
+        fetchNote()
+    },[])
 
     return (
         <div>
@@ -74,7 +84,6 @@ const Add = () => {
                     <div className="add-container">
                         <form onSubmit={handleFormSubmision}>
                             <h2 className="heading">That your awesome note</h2>
-                            <p>{message}</p>
                             <div>
                                 <label htmlFor="title">Title</label>
                                 <input onChange={handleOnChange} type="text" value={data.title} name='title' required />
@@ -82,6 +91,8 @@ const Add = () => {
                             <div>
                                 <label htmlFor="details">Details</label>
                                 <textarea onChange={handleOnChange} cols="30" value={data.content} name='content' rows="5" required></textarea>
+                                <br/>
+                                <p>{message}</p>
                             </div>
                             <button type="submit" className="submit-btn">Submit</button>
                         </form>
