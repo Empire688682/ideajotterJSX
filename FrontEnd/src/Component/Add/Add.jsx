@@ -107,6 +107,10 @@ const Add = () => {
                                         <p className="date">{n.date}</p>
                                     </div>
                                     <p className="content">{n.content}</p>
+                                    <div className="edit_con">
+                                    <button className="submit-btn">Edit</button>
+                                    <button className="delete-btn">Delete</button>
+                                    </div>
                                 </div>
                             }) : null
                         }
