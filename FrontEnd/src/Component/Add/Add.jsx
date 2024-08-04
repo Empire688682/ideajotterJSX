@@ -101,7 +101,7 @@ const Add = () => {
                         <h3>NOTES</h3>
                         {
                             note ? note.map((n) => {
-                                return <div key={n.id}>
+                                return <div className='note' key={n.id}>
                                     <div className="header">
                                         <p className="title">{n.title}</p>
                                         <p className="date">{n.date}</p>

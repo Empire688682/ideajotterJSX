@@ -172,6 +172,14 @@
     margin-bottom: 80px;
 }
 
+.note_section .note{
+    margin-bottom: 30px;
+}
+.note_section .header{
+    display: flex;
+    justify-content: space-between;
+}
+
 .note_section button{
     padding: 10px 20px;
 }
