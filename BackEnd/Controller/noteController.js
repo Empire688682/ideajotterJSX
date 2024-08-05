@@ -99,10 +99,12 @@ const deleteNote = async (req, res) => {
         }
 
         // Delete the note
-        delete user.noteData[noteId];
+        user.noteData.delete(noteId);
 
         // Save the updated user
         await user.save();
+
+        console.log("user after delete:", user.noteData)
 
         res.json({ success: true, message: "Note deleted successfully", noteData: user.noteData });
     } catch (error) {
