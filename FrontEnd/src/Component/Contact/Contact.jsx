@@ -12,7 +12,7 @@ const Contact = () => {
         <h1>Contact Me </h1>
         <div className="row">
             <div className="col-2">
-               <form action="https://api.web3forms.com/submit" method="POST" id="form" onsubmit="reloadForm()">
+               <form action="https://api.web3forms.com/submit" method="POST" id="form">
 
                <div className="label-container-two">
                 <input type="hidden" name="access_key" value="5c7fd0a9-1735-4d2a-8af8-724f4ce23686"/>
