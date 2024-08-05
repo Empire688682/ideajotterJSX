@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './Add.css';
 import { useGlobalContex } from '../Context';
+import { MdEdit } from "react-icons/md";
 import { FaHeart } from "react-icons/fa";
 import axios from 'axios';
+import { MdDelete } from "react-icons/md";
 
 const Add = () => {
     const { user, token, url } = useGlobalContex();
@@ -12,7 +14,7 @@ const Add = () => {
         content: ""
     });
     const [message, setMessage] = useState(null);
-    const [netError, setNetError] = useState(null)
+    const [netError, setNetError] = useState(null);
 
     const handleFormSubmision = (e) => {
         e.preventDefault();
@@ -77,6 +79,7 @@ const Add = () => {
     },[token,url]);
 
     const deleteNote = async (noteId) => {
+        console.log(noteId)
         try {
             const response = await axios.post(url + "/api/note/del", { noteId }, {
                 headers: {
@@ -93,9 +96,18 @@ const Add = () => {
             }
         } catch (error) {
             console.log("Error deleting note:", error);
-            setMessage("Error deleting note. Please try again later.");
         }
     };
+
+    const handleEditBtn = (note) =>{
+        window.scrollTo(100, 150);
+        setData({
+            title: note.title,
+            content: note.content
+        });
+        deleteNote(note.id)
+    }
+
 
     return (
         <div>
@@ -119,7 +131,7 @@ const Add = () => {
                                 <br/>
                                 <p>{message}</p>
                             </div>
-                            <button type="submit" className="submit-btn">Submit</button>
+                            <button type="submit" className="submit-btn">Save</button>
                         </form>
                     </div>
                     <div className="note_section">
@@ -136,8 +148,8 @@ const Add = () => {
                                     </div>
                                     <p className="content">{n.content}</p>
                                     <div className="edit_con">
-                                    <button className="submit-btn">Edit</button>
-                                    <button className="delete-btn" onClick={()=>deleteNote(n.id)}>Delete</button>
+                                    <button className="submit-btn" onClick={()=>handleEditBtn(n)} ><MdEdit /></button>
+                                    <button className="delete-btn" onClick={()=>deleteNote(n.id)}><MdDelete /></button>
                                     </div>
                                 </div>
                             }) : null

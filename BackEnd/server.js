@@ -6,7 +6,7 @@ import { userRouter } from './Route/userRoute.js';
 
 //config
 const app = express();
-const port = 1999
+const port = process.env.PORT || 1999
 
 // Middleware
 app.use(express.json());

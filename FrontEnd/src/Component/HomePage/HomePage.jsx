@@ -7,7 +7,6 @@ import { useGlobalContex } from '../Context';
 
 const HomePage = () => {
     const {token} = useGlobalContex();
-    console.log(token)
 
   return (
     <div className="ideasJotter">
@@ -16,7 +15,7 @@ const HomePage = () => {
                 <h1>Welcome to ideasjoter</h1>
                 <h2>Preserve Your Innovative Concepts for Future Exploration</h2>
                 <p>Jot down ideas you think is great</p>
-                <NavLink to={!token? "signup":"/add"} className='btn'>Add Your Note</NavLink>
+                <NavLink to={!token? "/signup":"/add"} className='btn'>Add Your Note</NavLink>
             </div> 
             <div className="row">
                 <div className="col-2">

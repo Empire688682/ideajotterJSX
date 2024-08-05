@@ -54,7 +54,6 @@ const addNote = async (req, res) => {
         // Fetch updated user data including noteData
         const updatedUser = await userModel.findById(userId);
         const noteData = updatedUser.noteData;
-        console.log(noteData);
 
         res.json({ success: true, noteData, message: "Note Saved" })
     } catch (error) {
@@ -94,17 +93,20 @@ const deleteNote = async (req, res) => {
             return res.json({ success: false, message: "User not found" });
         }
 
-        if (!user.noteData || !user.noteData[noteId]) {
+        if (!user.noteData) {
             return res.json({ success: false, message: "Note not found" });
         }
+
+        //note collection deleting
+        const note = noteId
+        await noteModel.findByIdAndDelete(note);
+
 
         // Delete the note
         user.noteData.delete(noteId);
 
         // Save the updated user
         await user.save();
-
-        console.log("user after delete:", user.noteData)
 
         res.json({ success: true, message: "Note deleted successfully", noteData: user.noteData });
     } catch (error) {
@@ -113,5 +115,38 @@ const deleteNote = async (req, res) => {
     }
 };
 
+const editNote = async (req, res) => {
+    try {
+        const userId = req.userId;
+        const { noteId, title, content } = req.body;
 
-export { addNote, fetchNote, deleteNote }
+        if (!userId) {
+            return res.json({ success: false, message: "Not Authorized" });
+        }
+
+        const user = await userModel.findById(userId);
+        if (!user) {
+            return res.json({ success: false, message: "User not found" });
+        }
+
+        if (!user.noteData.has(noteId)) {
+            return res.json({ success: false, message: "Note not found" });
+        }
+
+        user.noteData.set(noteId, {
+            ...user.noteData.get(noteId),
+            title: title || user.noteData.get(noteId).title,
+            content: content || user.noteData.get(noteId).content
+        });
+
+        await user.save();
+
+        res.json({ success: true, noteData: Array.from(user.noteData.values()), message: "Note edited successfully" });
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: "Error" });
+    }
+}
+
+
+export { addNote, fetchNote, deleteNote, editNote }
