@@ -15,8 +15,8 @@ const Add = () => {
     });
     const [message, setMessage] = useState(null);
     const [netError, setNetError] = useState(null);
-    const [loading, setLoading] = useState(false)
-    const [fetching, setFetching] = useState(false)
+    const [loading, setLoading] = useState(false);
+    const [fetching, setFetching] = useState(false);
 
     const handleFormSubmision = (e) => {
         e.preventDefault();
@@ -116,6 +116,16 @@ const Add = () => {
         });
         deleteNote(note.id)
     }
+
+    useEffect(() => {
+        // Check if URL has the #Notes hash
+        if (window.location.hash === '#Notes') {
+            const notesSection = document.getElementById('Notes');
+            if (notesSection) {
+                notesSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    }, []);
 
 
     return (
