@@ -16,6 +16,7 @@ const SignUp = () => {
         password: "",
         pwdRepeat: ""
     });
+    const [loading, setLoading] = useState(false)
 
     const clearInputField = () => {
         setData({
@@ -47,6 +48,7 @@ const SignUp = () => {
             newUrl += "/api/user/register"
         }
         try {
+            setLoading(true);
             const response = await axios.post(newUrl, data, { headers: { token } });
             if (response.data.success) {
                 clearInputField()
@@ -63,6 +65,9 @@ const SignUp = () => {
             }
         } catch (error) {
             console.log(error)
+        }
+        finally{
+            setLoading(false);
         }
     };
 
@@ -97,10 +102,16 @@ const SignUp = () => {
                         errorMessage ? <p>{errorMessage}</p> : null
                     }
                     <button type="submit">
-                        {loginStage === "Login" ?
+                       {
+                        loading? "Processing....."
+                        :
+                        <>
+                         {loginStage === "Login" ?
                             "Login"
                             :
                             "Signup"}
+                        </>
+                       }
                     </button>
                 </form>
                 <div className="login-status">

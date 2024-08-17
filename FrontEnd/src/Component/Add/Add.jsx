@@ -15,6 +15,8 @@ const Add = () => {
     });
     const [message, setMessage] = useState(null);
     const [netError, setNetError] = useState(null);
+    const [loading, setLoading] = useState(false)
+    const [fetching, setFetching] = useState(false)
 
     const handleFormSubmision = (e) => {
         e.preventDefault();
@@ -29,6 +31,7 @@ const Add = () => {
 
     const addNote = async () => {
         try {
+            setLoading(true)
             const response = await axios.post(url+"/api/note/add", data, {
                 headers: {
                     Authorization: `${token}`
@@ -54,11 +57,15 @@ const Add = () => {
         } catch (error) {
             console.log(error);
         }
+        finally{
+            setLoading(false)
+        }
     };
 
     useEffect(()=>{
         const fetchNote = async () =>{
             try {
+                setFetching(true)
                 const response = await axios.get(url+"/api/note/get", {headers: {
                     Authorization: `${token}`
                 }})
@@ -74,12 +81,14 @@ const Add = () => {
                 console.log(error);
                 setNetError(error.message)
             }
+            finally{
+                setFetching(false)
+            }
         }
         fetchNote()
     },[token,url]);
 
     const deleteNote = async (noteId) => {
-        console.log(noteId)
         try {
             const response = await axios.post(url + "/api/note/del", { noteId }, {
                 headers: {
@@ -112,6 +121,9 @@ const Add = () => {
     return (
         <div>
             <div className="add-header">
+                <div className="btnCon">
+                <a href="#Notes">MY NOTES</a>
+                </div>
                 <div className="container">
                     <h1> Add your great idea @ <p className='user'> {user} <FaHeart style={{ color: "red", minWidth: "40px" }} /></p></h1>
                 </div>
@@ -131,16 +143,19 @@ const Add = () => {
                                 <br/>
                                 <p>{message}</p>
                             </div>
-                            <button type="submit" className="submit-btn">Save</button>
+                            <button type="submit" className="submit-btn">{loading? "Saving....":"Save"}</button>
                         </form>
                     </div>
-                    <div className="note_section">
-                        <h2>USER NOTES</h2>
+                    <div className="note_section" id='Notes'>
+                        <h2>MY NOTES</h2>
+                        {
+                            fetching? <p style={{fontSize:"20px", marginTop:"30px"}}>Fetching Note.......</p>:null
+                        }
                         {
                             netError? <h3 style={{color:"red"}}>!{netError} try to login again or refresh the page</h3>:null
                         }
                         {
-                            note ? note.map((n) => {
+                            note && note.length > 0  ? note.map((n) => {
                                 return <div className='note' key={n.id}>
                                     <div className="header">
                                         <p className="title">{n.title}</p>
@@ -152,7 +167,9 @@ const Add = () => {
                                     <button className="delete-btn" onClick={()=>deleteNote(n.id)}><MdDelete /></button>
                                     </div>
                                 </div>
-                            }) : null
+                            }) : <>{
+                                fetching? null :<h2 style={{fontSize:"20px", marginTop:"30px"}}>Note Empty</h2>
+                            }</>
                         }
                     </div>
                 </div>

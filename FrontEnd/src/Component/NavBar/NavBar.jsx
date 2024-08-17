@@ -27,7 +27,7 @@ const NavBar = () => {
                                 <li onClick={() => setShowMenu(false)}><NavLink className="menu_link" to="/contact">Contact</NavLink></li>
                                 {
                                     token ?
-                                        <li onClick={() => setShowMenu(false)}><NavLink className="menu_link" to="/note">My Note</NavLink></li>
+                                        <li onClick={() => setShowMenu(false)}><NavLink className="menu_link" to="/add#Notes">My Note</NavLink></li>
                                         :
                                         null
                                 }
