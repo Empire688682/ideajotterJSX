@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router-dom';
 const SignUp = () => {
     const [loginStage, setLogInStage] = useState("Login");
     const [errorMessage, setErrorMessage] = useState(null);
-    const { url, token } = useGlobalContex();
-    const navigate = useNavigate()
+    const { url } = useGlobalContex();
+    const navigate = useNavigate();
     const [data, setData] = useState({
         name: "",
         username: "",
@@ -25,50 +25,44 @@ const SignUp = () => {
             email: "",
             password: "",
             pwdRepeat: ""
-        })
+        });
     };
 
     const handleOnchange = (e) => {
         const { name, value } = e.target;
         setData((prev) => ({ ...prev, [name]: value }));
-        setErrorMessage("")
+        setErrorMessage("");
     };
 
     const handleFormSubmision = (e) => {
         e.preventDefault();
         signUpLogIn();
-        console.log("ClickEd")
     };
 
     const signUpLogIn = async () => {
-        console.log("ClickEd")
         let newUrl = url;
         if (loginStage === "Login") {
-            newUrl += "/api/user/login"
+            newUrl += "/api/user/login";
+        } else {
+            newUrl += "/api/user/register";
         }
-        else {
-            newUrl += "/api/user/register"
-        }
+
         try {
             setLoading(true);
-            const response = await axios.post(newUrl, data, { headers: { token } });
+            const response = await axios.post(newUrl, data);
+
             if (response.data.success) {
-                clearInputField()
+                clearInputField();
                 localStorage.setItem("token", response.data.token);
                 localStorage.setItem("user", response.data.User);
-                navigate("/")
-                window.location.reload()
-            }
-            else {
-                setErrorMessage(response.data.message)
+                navigate("/");
+                window.location.reload();
+            } else {
+                setErrorMessage(response.data.message);
             }
         } catch (error) {
-            console.log(error);
-            setErrorMessage(error);
-            console.log("AMessage:", error);
-            
-        }
-        finally{
+            setErrorMessage("An error occurred, please try again later.");
+        } finally {
             setLoading(false);
         }
     };
@@ -100,20 +94,9 @@ const SignUp = () => {
                             <input required onChange={handleOnchange} value={data.pwdRepeat} type="password" placeholder="Repeat Password" name="pwdRepeat" />
                         }
                     </div>
-                    {
-                        errorMessage ? <p>{errorMessage}</p> : null
-                    }
+                    {errorMessage ? <p>{errorMessage}</p> : null}
                     <button type="submit">
-                       {
-                        loading? "Processing....."
-                        :
-                        <>
-                         {loginStage === "Login" ?
-                            "Login"
-                            :
-                            "Signup"}
-                        </>
-                       }
+                        {loading ? "Processing..." : (loginStage === "Login" ? "Login" : "Signup")}
                     </button>
                 </form>
                 <div className="login-status">
@@ -124,23 +107,23 @@ const SignUp = () => {
                     )}
                 </div>
                 <div className="user_agreement">
-                <h3>User Agreement</h3>
-                <ul>
-                    <li><b>Account Responsibility:</b> You are responsible for all activities under your account. Keep your login credentials secure.</li>
-                    <li><b>Appropriate Use:</b> Use IdeaJotter responsibly. Do not upload harmful, offensive, or illegal content.</li>
-                    <li><b>Data Privacy:</b>Your data is important to us. We will not share your personal information without your consent, except as required by law.</li>
-                    <li><b>Modification and Termination:</b>We may modify or discontinue the platform at any time. Accounts may be suspended or terminated for violations.</li>
-                    <li><b>Limitation of Liability:</b>IdeaJotter is provided "as is." We are not liable for any damages resulting from your use of the platform.</li>
-                </ul>
-                <p>
-                    <li>I have read and agree to the User Agreement.</li>
-                    <input type="checkbox" name="" id="" />
-                    I agree to the terms and conditions
-                </p>
+                    <h3>User Agreement</h3>
+                    <ul>
+                        <li><b>Account Responsibility:</b> You are responsible for all activities under your account. Keep your login credentials secure.</li>
+                        <li><b>Appropriate Use:</b> Use IdeaJotter responsibly. Do not upload harmful, offensive, or illegal content.</li>
+                        <li><b>Data Privacy:</b> Your data is important to us. We will not share your personal information without your consent, except as required by law.</li>
+                        <li><b>Modification and Termination:</b> We may modify or discontinue the platform at any time. Accounts may be suspended or terminated for violations.</li>
+                        <li><b>Limitation of Liability:</b> IdeaJotter is provided "as is." We are not liable for any damages resulting from your use of the platform.</li>
+                    </ul>
+                    <p>
+                        <li>I have read and agree to the User Agreement.</li>
+                        <input type="checkbox" name="" id="" />
+                        I agree to the terms and conditions
+                    </p>
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default SignUp
+export default SignUp;

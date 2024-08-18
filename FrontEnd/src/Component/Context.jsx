@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useContext } from 'react';
 
 const JoterContext = React.createContext();
 export const JoterProvider = ({children}) =>{
 
-    //const url = "https://ideajotter-backend.onrender.com";
-    const url = "http://localhost:5173";
+    const url = "https://ideajotter-backend.onrender.com";
 
     const [token, setToken] = useState(localStorage.getItem("token")||null);
     const [user, setUser] = useState(localStorage.getItem("user") ||'');

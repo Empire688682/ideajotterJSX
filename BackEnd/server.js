@@ -23,6 +23,6 @@ app.get('/', (req,res) =>{
 dbConnection()
 
 app.listen(port, () =>{
-    console.log(`App running on http://localhost:${port} `)
+    console.log(`App running on http://localhost:${port}`)
 })
 
