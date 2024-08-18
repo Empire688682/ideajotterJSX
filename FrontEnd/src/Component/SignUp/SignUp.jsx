@@ -16,7 +16,7 @@ const SignUp = () => {
         password: "",
         pwdRepeat: ""
     });
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
 
     const clearInputField = () => {
         setData({
@@ -36,10 +36,12 @@ const SignUp = () => {
 
     const handleFormSubmision = (e) => {
         e.preventDefault();
-        signUpLogIn()
+        signUpLogIn();
+        console.log("ClickEd")
     };
 
     const signUpLogIn = async () => {
+        console.log("ClickEd")
         let newUrl = url;
         if (loginStage === "Login") {
             newUrl += "/api/user/login"
@@ -54,17 +56,17 @@ const SignUp = () => {
                 clearInputField()
                 localStorage.setItem("token", response.data.token);
                 localStorage.setItem("user", response.data.User);
-                setLogInStage("Login");
-                if (loginStage === "Login") {
-                    navigate("/")
-                    window.location.reload()
-                }
+                navigate("/")
+                window.location.reload()
             }
             else {
                 setErrorMessage(response.data.message)
             }
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            setErrorMessage(error);
+            console.log("AMessage:", error);
+            
         }
         finally{
             setLoading(false);

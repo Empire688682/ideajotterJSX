@@ -55,9 +55,12 @@ const registerUser = async (req,res) =>{
 
         await user.save();
 
+        const User = await user.username;
+        console.log("USER:", User)
+
         const token = tokenGenerator(user._id);
 
-        return res.json({success:true, token, message:"User saved"});
+        return res.json({success:true, token, User, message:"User saved"});
 
     } catch (error) {
         console.log(error);

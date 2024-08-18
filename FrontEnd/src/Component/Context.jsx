@@ -4,7 +4,9 @@ import { useContext } from 'react';
 const JoterContext = React.createContext();
 export const JoterProvider = ({children}) =>{
 
-    const url = "https://ideajotter-backend.onrender.com";
+    //const url = "https://ideajotter-backend.onrender.com";
+    const url = "http://localhost:5173";
+
     const [token, setToken] = useState(localStorage.getItem("token")||null);
     const [user, setUser] = useState(localStorage.getItem("user") ||'');
 
