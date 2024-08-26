@@ -127,6 +127,12 @@ const Add = () => {
         }
     }, []);
 
+    useEffect(()=>{
+        if(!token){
+            window.location.replace("/")
+        }
+    },[])
+
 
     return (
         <div>

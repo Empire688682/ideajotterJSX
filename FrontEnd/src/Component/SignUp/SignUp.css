@@ -18,6 +18,18 @@
     background-color: #121212;
 }
 
+.sign-up form div{
+    position: relative;
+    width: 100%;
+}
+.eye_icon{
+    position: absolute;
+    right: 30px;
+    bottom: 20px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
 .sign-up form div input, .sign-up form button{
     width: 90%;
     padding: 15px; 

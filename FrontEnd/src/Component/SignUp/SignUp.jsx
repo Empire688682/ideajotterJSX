@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './SignUp.css';
 import { useGlobalContex } from '../Context';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { IoEyeSharp } from "react-icons/io5";
+import { FaEyeSlash } from "react-icons/fa";
 
 const SignUp = () => {
     const [loginStage, setLogInStage] = useState("Login");
     const [errorMessage, setErrorMessage] = useState(null);
-    const { url } = useGlobalContex();
+    const { url,token } = useGlobalContex();
     const navigate = useNavigate();
     const [data, setData] = useState({
         name: "",
@@ -17,6 +19,7 @@ const SignUp = () => {
         pwdRepeat: ""
     });
     const [loading, setLoading] = useState(false);
+    const [showPass, setShowPass] = useState(false);
 
     const clearInputField = () => {
         setData({
@@ -67,6 +70,12 @@ const SignUp = () => {
         }
     };
 
+    useEffect(()=>{
+        if(token){
+            window.location.replace("/")
+        }
+    },[])
+
     return (
         <div className="sign-up">
             <div className="container">
@@ -86,14 +95,31 @@ const SignUp = () => {
                         <input required onChange={handleOnchange} value={data.email} type="email" placeholder="Your Email" name="email" />
                     </div>
                     <div>
-                        <input required onChange={handleOnchange} value={data.password} type="password" placeholder="Password" name="password" />
+                        <input required onChange={handleOnchange} value={data.password} type={showPass? "text":"password"} placeholder="Password" name="password" />
+                        <small onClick={()=> setShowPass(!showPass)} className="eye_icon">
+                            {
+                                showPass?
+                                <IoEyeSharp />
+                                :
+                                <FaEyeSlash />
+                            }
+                        </small>
                     </div>
-                    <div>
-                        {loginStage === "Login" ?
-                            null :
-                            <input required onChange={handleOnchange} value={data.pwdRepeat} type="password" placeholder="Repeat Password" name="pwdRepeat" />
-                        }
-                    </div>
+                    {loginStage === "Login" ?
+                        null :
+                        <div>
+                            <input required onChange={handleOnchange} value={data.pwdRepeat} type={showPass? "text":"password"} placeholder="Repeat Password" name="pwdRepeat" />
+                            <small onClick={()=> setShowPass(!showPass)} className="eye_icon">
+                            {
+                                showPass?
+                                <IoEyeSharp />
+                                :
+                                <FaEyeSlash />
+                            }
+                            </small>
+                        </div>
+
+                    }
                     {errorMessage ? <p>{errorMessage}</p> : null}
                     <button type="submit">
                         {loading ? "Processing..." : (loginStage === "Login" ? "Login" : "Signup")}
