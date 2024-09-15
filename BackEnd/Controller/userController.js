@@ -75,12 +75,12 @@ const loginUser = async (req, res) => {
         }
 
         if (username !== user.username) {
-            return res.json({success: false, message: "No user found"});
+            return res.json({success: false, message: "Invalid Username"});
         }
 
         const isPasswordMatch = await bcrypt.compare(password, user.password);
         if (!isPasswordMatch) {
-            return res.json({success: false, message: "Password did not match"});
+            return res.json({success: false, message: "Invalid Password"});
         }
 
         const token = tokenGenerator(user._id);
